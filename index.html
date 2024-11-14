@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Pegada de Carbono</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #A7C7E7;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    h1 {
+      font-size: 24px;
+      color: #2C5F2D;
+    }
+    input {
+      font-size: 16px;
+      padding: 8px;
+      margin: 10px 0;
+      text-align: center;
+      width: 200px;
+    }
+    button {
+      font-size: 16px;
+      background-color: #87CEFA;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #69A197;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de Pegada de Carbono 🌍</h1>
+  <p>Insira os dados abaixo para calcular sua pegada de carbono:</p>
+
+  <div>
+    <label for="carDistance">Distância percorrida de carro (km):</label><br>
+    <input type="number" id="carDistance" placeholder="Ex.: 100">
+  </div>
+
+  <div>
+    <label for="transportDistance">Distância percorrida em transporte público (km):</label><br>
+    <input type="number" id="transportDistance" placeholder="Ex.: 50">
+  </div>
+
+  <div>
+    <label for="energyConsumption">Consumo de energia elétrica (kWh):</label><br>
+    <input type="number" id="energyConsumption" placeholder="Ex.: 30">
+  </div>
+
+  <button onclick="calculateFootprint()">Calcular Pegada de Carbono</button>
+
+  <div class="result" id="result"></div>
+
+  <script>
+    const CO2_CAR = 0.21; // kg CO₂ por km
+    const CO2_TRANS_PUBLIC = 0.10; // kg CO₂ por km
+    const CO2_ENERGY = 0.233; // kg CO₂ por kWh
+
+    function calculateFootprint() {
+      const carDistance = parseFloat(document.getElementById('carDistance').value) || 0;
+      const transportDistance = parseFloat(document.getElementById('transportDistance').value) || 0;
+      const energyConsumption = parseFloat(document.getElementById('energyConsumption').value) || 0;
+
+      const emissionCar = carDistance * CO2_CAR;
+      const emissionTransport = transportDistance * CO2_TRANS_PUBLIC;
+      const emissionEnergy = energyConsumption * CO2_ENERGY;
+
+      const totalEmission = emissionCar + emissionTransport + emissionEnergy;
+
+      const resultElement = document.getElementById('result');
+      resultElement.innerHTML = `
+        🌍 <strong>Pegada de Carbono Estimada</strong> 🌍<br>
+        Carro: ${emissionCar.toFixed(2)} kg CO₂<br>
+        Transporte Público: ${emissionTransport.toFixed(2)} kg CO₂<br>
+        Consumo de Energia: ${emissionEnergy.toFixed(2)} kg CO₂<br>
+        <strong>Total: ${totalEmission.toFixed(2)} kg CO₂</strong>
+      `;
+      resultElement.style.color = "darkgreen";
+    }
+  </script>
+</body>
+</html>
